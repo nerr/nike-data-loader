@@ -1,28 +1,25 @@
 <?php
-    include 'config.php';
-    var_dump($config);
+    include('config.php');
 
     require_once 'class/nikeplusphp.4.5.php';
     $n = new NikePlusPHP($config['user'], $config['pass']);
 
-    $activites = $n->activities(1);
+    $activites = $n->activities(5);
 
     foreach($activites as $key => $value)
     {
-        var_dump($value);
-
         $run['id'] = $value->activityId;
-        $run['date'] = $value->startTimeUtc;
-        $run['duration'] = $value->metrics->duration;
-        $run['distance'] = $value->metrics->distance;
+        $run['date'] = date('Y-m-d', strtotime($value->startTimeUtc));
+        $run['duration'] = gmdate("H:i:s", $value->metrics->duration/1000);
+        $run['distance'] = number_format($value->metrics->distance, 1).'km';
         $run['fuel'] = $value->metrics->fuel;
 
         $runs['activitys'][] = $run;
     }
 
     $all = $n->allTime();
-    $runs['summary']['alltimedistance'] = $all->lifetimeTotals->distance;
-    $runs['summary']['thismounthdistance'] = $all->homepageStats->totalDistance;
+    $runs['summary']['alltimedistance'] = number_format($all->lifetimeTotals->distance, 1).'km';
+    $runs['summary']['thismounthdistance'] = number_format($all->homepageStats->totalDistance, 1).'km';
 
-    //echo json_encode($runs);
+    echo json_encode($runs);
 ?>
