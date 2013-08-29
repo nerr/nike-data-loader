@@ -1,10 +1,15 @@
 <?php
+    if($_GET['num'] > 0)
+        $num = $_GET['num'];
+    else
+        $num = 5;
+
     include('config.php');
 
     require_once 'class/nikeplusphp.4.5.php';
     $n = new NikePlusPHP($config['user'], $config['pass']);
 
-    $activites = $n->activities(5);
+    $activites = $n->activities($num);
 
     foreach($activites as $key => $value)
     {
