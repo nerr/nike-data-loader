@@ -1,0 +1,8 @@
+<?php
+
+$config = array(
+    'user' = '', // nike plus account
+    'pass' = ''  // nike plus password
+);
+
+?>
