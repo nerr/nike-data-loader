@@ -27,5 +27,5 @@
     $runs['summary']['alltimedistance'] = number_format($all->lifetimeTotals->distance, 1).'km';
     $runs['summary']['thismounthdistance'] = number_format($all->homepageStats->totalDistance, 1).'km';
 
-    echo json_encode($runs);
+    echo $_GET['callback'].'('.json_encode($runs).')';
 ?>
