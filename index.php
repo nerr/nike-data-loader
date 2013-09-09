@@ -10,9 +10,6 @@
     $n = new NikePlusPHP($config['user'], $config['pass']);
 
     $activites = $n->activities($num);
-
-    var_dump($activites);
-
     foreach($activites as $key => $value)
     {
         $run['id'] = $value->activityId;
@@ -20,6 +17,7 @@
         $run['duration'] = gmdate("H:i:s", $value->metrics->duration/1000);
         $run['distance'] = number_format($value->metrics->distance, 1);
         $run['pace'] = gmdate("i's''", $value->metrics->duration/1000/$value->metrics->distance);
+        $run['avghr'] = $value->metrics->averageHeartRate;
         $run['fuel'] = $value->metrics->fuel;
 
         $runs['activitys'][] = $run;
