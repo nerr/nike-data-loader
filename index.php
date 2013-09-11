@@ -4,6 +4,8 @@
     else
         $num = 5;
 
+    $num++;
+
     include('config.php');
 
     require_once 'class/nikeplusphp.4.5.php';
