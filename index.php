@@ -22,8 +22,10 @@
         $run['avghr'] = $value->metrics->averageHeartRate;
         $run['fuel'] = $value->metrics->fuel;
 
-        $runs['activitys'][] = $run;
+        $runs['activitys'][$run['date']] = $run;
     }
+    //-- sort
+    krsort($runs['activitys']);
 
     $all = $n->allTime();
     $runs['summary']['alltimedistance'] = number_format($all->lifetimeTotals->distance, 1);
