@@ -8,7 +8,7 @@
 
     include('config.php');
 
-    require_once 'class/nikeplusphp.4.5.php';
+    require_once 'class/nikeplusphp.php';
     $n = new NikePlusPHP($config['user'], $config['pass']);
 
     $activites = $n->activities($num);

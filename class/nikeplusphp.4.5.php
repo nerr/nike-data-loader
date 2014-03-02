@@ -8,7 +8,7 @@
  * 
  * @author Charanjit Chana - http://charanj.it
  * @link http://nikeplusphp.org
- * @version 4.5
+ * @version 4.5.1
  * 
  * Usage:
  * $n = new NikePlusPHP('email@address.com', 'password');
@@ -109,6 +109,7 @@ class NikePlusPHP {
 		curl_setopt($ch, CURLOPT_USERAGENT, $this->_userAgent);
 		curl_setopt($ch, CURLOPT_URL, $path);
 		$data = curl_exec($ch);
+		$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		curl_close($ch);
 		$jsonData = json_decode(utf8_decode($data));
 		if(is_null($jsonData)) {
@@ -140,7 +141,7 @@ class NikePlusPHP {
 		}
 		if(!$this->activities) {
 			while($loop == true) {
-				$results = $this->_getNikePlusFile('http://nikeplus.nike.com/plus/activity/running/'.rawurlencode($this->userId).'/lifetime/activities?indexStart='.$start.'&indexEnd='.$limit);
+				$results = $this->_getNikePlusFile('https://secure-nikeplus.nike.com/plus/activity/running/'.rawurlencode($this->userId).'/lifetime/activities?indexStart='.$start.'&indexEnd='.$limit);
 				if(isset($results->activities)) {
 					foreach($results->activities as $activity) {
 						$this->activities[$activity->activity->activityId] = $activity->activity;
@@ -165,7 +166,7 @@ class NikePlusPHP {
 	 */
 	 public function allTime() {
 		if(!$this->allTime) {
-			$this->allTime = $this->_getNikePlusFile('http://nikeplus.nike.com/plus/activity/running/'.rawurlencode($this->userId).'/lifetime/activities?indexStart=999999&indexEnd=1000000');
+			$this->allTime = $this->_getNikePlusFile('https://secure-nikeplus.nike.com/plus/activity/running/'.rawurlencode($this->userId).'/lifetime/activities?indexStart=999999&indexEnd=1000000');
 		}
 		return $this->allTime;
 	}
@@ -179,7 +180,7 @@ class NikePlusPHP {
 	 * @return object
 	 */
 	public function activity($id) {
-		return $this->_getNikePlusFile('http://nikeplus.nike.com/plus/running/ajax/'.$id);//->activity;
+		return $this->_getNikePlusFile('https://secure-nikeplus.nike.com/plus/running/ajax/'.$id);//->activity;
 	}
 
 	/**
@@ -212,7 +213,7 @@ class NikePlusPHP {
 	 */
 	public function routes() {
 		if(!$this->routes) {
-			$this->routes = $this->_getNikePlusFile('http://nikeplus.nike.com/location/services/v1.0/routes/running/favorite');
+			$this->routes = $this->_getNikePlusFile('https://secure-nikeplus.nike.com/location/services/v1.0/routes/running/favorite');
 		}
 		return $this->routes;
 	}
@@ -226,7 +227,7 @@ class NikePlusPHP {
 	 * @return object
 	 */
 	public function route($id) {
-		return $this->_getNikePlusFile('http://nikeplus.nike.com/location/services/v1.0/routes/running/'.$id);
+		return $this->_getNikePlusFile('https://secure-nikeplus.nike.com/location/services/v1.0/routes/running/'.$id);
 	}
 
 	/**
